@@ -143,6 +143,17 @@ def disable_numbering(paragraph) -> None:
     num_pr.get_or_add_numId().val = 0
 
 
+def clear_footers(document) -> None:
+    """Vacia todos los pies de pagina (primera pagina, pares e impares)."""
+    for section in document.sections:
+        for footer in (section.first_page_footer, section.even_page_footer, section.footer):
+            footer.is_linked_to_previous = False
+            for paragraph in footer.paragraphs:
+                for child in list(paragraph._p):
+                    if child.tag != qn("w:pPr"):
+                        paragraph._p.remove(child)
+
+
 def set_table_borders(table) -> None:
     tbl_pr = table._tbl.tblPr
     borders = OxmlElement("w:tblBorders")
@@ -255,6 +266,13 @@ def build() -> None:
     set_columns(children[P_AUTHOR_SECT].find(qn("w:pPr")).find(qn("w:sectPr")),
                 max(len(authors), 1))
     body.remove(children[P_EXTRA_AUTHOR_SECT])
+
+    # --- pie de pagina ------------------------------------------------------ #
+    # La plantilla trae el marcador de copyright de conferencia
+    # ("XXX-X-XXXX-XXXX-X/XX/$XX.00 (c)20XX IEEE") en el pie de la primera
+    # pagina. Es un dato que asigna la conferencia; en un trabajo academico se
+    # elimina.
+    clear_footers(document)
 
     # --- se vacia el cuerpo de ejemplo ------------------------------------- #
     for el in children[P_BODY_FIRST:P_BODY_LAST + 1]:
