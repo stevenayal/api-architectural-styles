@@ -209,7 +209,9 @@ class Builder:
     def table(self, caption: str, rows: list[list[str]]) -> None:
         """Tabla a ancho de pagina: se aisla en una seccion de una sola columna."""
         self.section_break(2)          # cierra el tramo a dos columnas
-        self.paragraph("table head", caption, rich=False)
+        # el estilo 'table head' de la plantilla autonumera en ingles ("TABLE I.");
+        # se anula para que el rotulo en espanol del md no salga duplicado
+        disable_numbering(self.paragraph("table head", caption, rich=False))
         table = self.doc.add_table(rows=len(rows), cols=len(rows[0]))
         set_table_borders(table)
         table.autofit = True

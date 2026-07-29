@@ -54,7 +54,11 @@ desaparece en otra máquina.
 - Las referencias siguen **APA 7** (el enunciado remite a la guía APA), por lo que se anula la
   numeración automática `[1]` que trae el estilo `references` de la plantilla.
 - El límite de 2000–4000 palabras aplica al texto, no a tablas ni referencias:
-  `scripts/wordcount.py` cuenta solo el cuerpo. Actualmente: **3054 palabras**.
+  `scripts/wordcount.py` cuenta solo el cuerpo. Actualmente: **3118 palabras**.
+- Se vacían los pies de página: la plantilla trae el marcador de copyright de conferencia
+  (`XXX-X-XXXX-XXXX-X/XX/$XX.00 ©20XX IEEE`), que solo aplica a un paper aceptado en un congreso.
+- Los rótulos de tabla se escriben en español desde el `.md` y se anula la numeración automática
+  del estilo `table head`, que los emitiría en inglés (`TABLE I.`) y quedarían duplicados.
 
 ## Revisión antes de entregar
 
